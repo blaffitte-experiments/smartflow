@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Nombre de commits à générer
-NBR_COMMITS=10
+NBR_COMMITS=30
 
 # Array de messages de commit
 commit_messages=(
@@ -22,7 +22,7 @@ for i in $(seq 1 $NBR_COMMITS)
 do
     # Créer un fichier temporaire pour chaque commit
     touch "tempfile_$i.txt"
-    git add "tempfile_$i.txt"
+    git add .
     
     # Sélectionner un message de commit aléatoire
     commit_message=${commit_messages[$RANDOM % ${#commit_messages[@]}]}
