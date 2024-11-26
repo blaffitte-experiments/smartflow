@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Nombre de commits à générer
-NBR_COMMITS=30
+NBR_COMMITS=10
 
 # Array de messages de commit
 commit_messages=(
@@ -20,6 +20,8 @@ commit_messages=(
 # Boucle pour générer les commits
 for i in $(seq 1 $NBR_COMMITS)
 do
+   
+    git checkout -b "feature/gf_mafuturefeature$i"
     # Créer un fichier temporaire pour chaque commit
     touch "tempfile_$i.txt"
     git add .
@@ -30,6 +32,7 @@ do
     # Créer le commit
     git commit -m "$commit_message"
     git checkout -b "feature/tdb_mafeature$i" master
+    
     
     echo "Commit $i: $commit_message"
 done

@@ -1,2 +1,2 @@
-20537
-Commit 7: Refactorisation du code
+22934
+Commit 7: Correction des fautes de frappe
