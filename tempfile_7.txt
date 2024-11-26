@@ -1,2 +1,2 @@
-6957
-Commit 7: Nettoyage du code
+20537
+Commit 7: Refactorisation du code
