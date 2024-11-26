@@ -29,6 +29,7 @@ do
     
     # Créer le commit
     git commit -m "$commit_message"
+    git checkout -b "feature/tdb_mafeature$i" master
     
     echo "Commit $i: $commit_message"
 done
