@@ -65,5 +65,101 @@ master
 - Automatisation simplifiée pour les pipelines CI/CD
 - Maintenance facilitée avec des conventions de nommage claires
 
+## Exemple de pipeline
 
+```groovy
+pipeline {
+    agent any
 
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    def branchName = env.BRANCH_NAME
+                    if (branchName.startsWith('tbd-feature/') || branchName.startsWith('gf-feature/')) {
+                        echo "Feature branch detected: ${branchName}"
+                        checkout scm
+                    } else if (branchName.startsWith('tbd-release/') || branchName.startsWith('gf-release/')) {
+                        echo "Release branch detected: ${branchName}"
+                        checkout scm
+                    } else if (branchName == 'master') {
+                        echo "Master branch detected: ${branchName}"
+                        checkout scm
+                    } else if (branchName.startsWith('project/')) {
+                        echo "Project branch detected: ${branchName}"
+                        checkout scm
+                    } else {
+                        error "Unknown branch type: ${branchName}"
+                    }
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    def branchName = env.BRANCH_NAME
+                    if (branchName.startsWith('tbd-feature/') || branchName.startsWith('gf-feature/')) {
+                        echo "Building feature branch: ${branchName}"
+                        // Ajoutez vos étapes de build pour les branches feature ici
+                    } else if (branchName.startsWith('tbd-release/') || branchName.startsWith('gf-release/')) {
+                        echo "Building release branch: ${branchName}"
+                        // Ajoutez vos étapes de build pour les branches release ici
+                    } else if (branchName == 'master') {
+                        echo "Building master branch: ${branchName}"
+                        // Ajoutez vos étapes de build pour la branche master ici
+                    } else if (branchName.startsWith('project/')) {
+                        echo "Building project branch: ${branchName}"
+                        // Ajoutez vos étapes de build pour les branches project ici
+                    }
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    def branchName = env.BRANCH_NAME
+                    if (branchName.startsWith('tbd-feature/') || branchName.startsWith('gf-feature/')) {
+                        echo "Testing feature branch: ${branchName}"
+                        // Ajoutez vos étapes de test pour les branches feature ici
+                    } else if (branchName.startsWith('tbd-release/') || branchName.startsWith('gf-release/')) {
+                        echo "Testing release branch: ${branchName}"
+                        // Ajoutez vos étapes de test pour les branches release ici
+                    } else if (branchName == 'master') {
+                        echo "Testing master branch: ${branchName}"
+                        // Ajoutez vos étapes de test pour la branche master ici
+                    } else if (branchName.startsWith('project/')) {
+                        echo "Testing project branch: ${branchName}"
+                        // Ajoutez vos étapes de test pour les branches project ici
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    def branchName = env.BRANCH_NAME
+                    if (branchName.startsWith('tbd-release/') || branchName.startsWith('gf-release/') || branchName == 'master') {
+                        echo "Deploying release or master branch: ${branchName}"
+                        // Ajoutez vos étapes de déploiement pour les branches release et master ici
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline terminé!'
+        }
+        success {
+            echo 'Pipeline réussi!'
+        }
+        failure {
+            echo 'Pipeline échoué.'
+        }
+    }
+}
+```
