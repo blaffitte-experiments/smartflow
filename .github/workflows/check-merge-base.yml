@@ -20,8 +20,9 @@ jobs:
 
         if [ "$BASE" != "$MASTER_BASE" ]; then
           echo "Merge base differs from master! Blocking PR..."
-          exit 1
+         
         fi
+         exit 1
 
     - name: Output success
       run: echo "Merge base matches. PR can be merged."
