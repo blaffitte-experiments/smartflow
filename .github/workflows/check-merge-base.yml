@@ -1,0 +1,27 @@
+name: Check Merge Base
+
+on: [pull_request]
+
+jobs:
+  check-merge-base:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Ensure we fetch all history so we can calculate the merge-base
+
+    - name: Set up Git
+      run: |
+        git fetch origin master
+        BASE=$(git merge-base HEAD origin/master)
+        MASTER_BASE=$(git merge-base origin/master origin/${{ github.event.pull_request.base.ref }})
+
+        if [ "$BASE" != "$MASTER_BASE" ]; then
+          echo "Merge base differs from master! Blocking PR..."
+          exit 1
+        fi
+
+    - name: Output success
+      run: echo "Merge base matches. PR can be merged."
