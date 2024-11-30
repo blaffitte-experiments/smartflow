@@ -1,28 +1,39 @@
 name: Check Merge Base
 
-on: [pull_request]
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
-  check-merge-base:
+  update-pr-status:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        fetch-depth: 0  # Ensure we fetch all history so we can calculate the merge-base
+        fetch-depth: 0
 
     - name: Set up Git
+      run: git fetch origin master
+
+    - name: Check merge base
+      id: check_merge_base
       run: |
-        git fetch origin master
         BASE=$(git merge-base HEAD origin/master)
         MASTER_BASE=$(git merge-base origin/master origin/${{ github.event.pull_request.base.ref }})
 
         if [ "$BASE" != "$MASTER_BASE" ]; then
-          echo "Merge base differs from master! Blocking PR..."
-         
+          echo "merge_base_different=true" >> $GITHUB_ENV
+        else
+          echo "merge_base_different=true" >> $GITHUB_ENV
         fi
-         exit 1
 
-    - name: Output success
-      run: echo "Merge base matches. PR can be merged."
+    - name: Post PR comment
+      if: env.merge_base_different == 'true'
+      run: |
+        curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+        -H "Accept: application/vnd.github.v3+json" \
+        https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+        -d '{"body":"⚠️ Merge base is different from master. PR cannot be merged until it is rebased."}'
+        exit 1
