@@ -26,7 +26,7 @@ jobs:
         if [ "$BASE" != "$MASTER_BASE" ]; then
           echo "merge_base_different=true" >> $GITHUB_ENV
         else
-          echo "merge_base_different=true" >> $GITHUB_ENV
+          echo "merge_base_different=false" >> $GITHUB_ENV
         fi
 
     - name: Post PR comment
