@@ -9,7 +9,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'  
-      - uses: jenkinsci/jfr-setup-action@master
+      - uses: blaffitte-experiments/jfr-setup-action@master
         with:
           jenkins-version: 2.489
           jenkins-pm-version: 2.13.2
