@@ -8,6 +8,7 @@ jobs:
       - uses: jenkinsci/jfr-setup-action@master
         with:
           jenkins-version: 2.414.3
+          jfr-version: 1.0-beta-32
       - uses: jenkinsci/jfr-plugin-installation-action@master
         with:
           pluginstxt: plugins.txt
