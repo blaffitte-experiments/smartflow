@@ -4,3 +4,13 @@ jenkins:
         env:
           - key: hello
             value: world
+tool:
+  jdk:
+    installations:
+      - name: jdk11
+        home: "~/jdk11"
+        properties:
+          - installSource:
+              installers:
+                - adoptOpenJdkInstaller:
+                    id: "jdk-11.0.14.1+1"
