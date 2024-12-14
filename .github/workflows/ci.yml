@@ -7,15 +7,12 @@ jobs:
       image: ghcr.io/jenkinsci/jenkinsfile-runner:latest
     steps:
       - uses: actions/checkout@v4
-      - uses: jenkinsci/jfr-setup-action@master
       - uses:
-          jenkinsci/jfr-container-action@master
-      - uses: jenkinsci/jfr-plugin-installation-action@master
-        with:
-          pluginstxt: plugins.txt
-      - uses: jenkinsci/jfr-runtime-action@master
+          jenkinsci/jfr-static-image-action@master
         with:
           command: run
           jenkinsfile: Jenkinsfile
+          pluginstxt: plugins.txt
           jcasc: jcasc.yml
           initHook: groovy.init.d
+          baseImage: maven:3.8.3-openjdk-17
