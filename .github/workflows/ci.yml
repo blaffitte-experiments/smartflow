@@ -6,6 +6,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: blaffitte-experiments/jfr-setup-action@master
+        with:
+          jenkins-version: 2.487
+          jenkins-pm-version: 2.13.2
+          jfr-version: 1.0-beta-32
       - uses: jenkinsci/jfr-plugin-installation-action@master
         with:
           pluginstxt: plugins.txt
