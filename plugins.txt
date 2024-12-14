@@ -1,6 +1,3 @@
 git
-docker
 junit
-credentials
-blueocean
 adoptopenjdk
